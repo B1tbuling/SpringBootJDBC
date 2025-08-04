@@ -1,16 +1,31 @@
 package com.rest_java_education.course;
 
+import com.rest_java_education.course.model.User;
 import com.rest_java_education.course.service.UserService;
-
-import java.sql.SQLException;
 
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
 
         UserService userService = new UserService();
 
         userService.createUserTable();
+
+        User user1 = new User(1L, "Misha", "misha@email.com", "8 999 999 99 91");
+        User user2 = new User(2L, "Alex", "alex@email.com", "8 999 999 99 92");
+        User user3 = new User(3L, "Georg", "georg@email.com", "8 999 999 99 93");
+        User user4 = new User(4L, "Debil", "debil@email.com", "8 999 999 99 94");
+
+        userService.saveUser(user1);
+        userService.saveUser(user2);
+        userService.saveUser(user3);
+        userService.saveUser(user4);
+
+        userService.getAllUsers();
+
+        userService.removeUserById(1L);
+
+        userService.cleanUserTable();
 
         userService.dropUserTable();
 

@@ -1,18 +1,11 @@
 package com.rest_java_education.course.dao;
 
-import java.sql.SQLException;
-import java.util.Optional;
 import java.util.List;
 
+import com.rest_java_education.course.model.User;
 
-//createUserTable()
-//dropUserTable()
-//saveUser()
-//removeUserById()
-//getAllUsers()
-//cleanUserTable()
 
-public interface UserDAO<T> {
+public interface UserDAO {
 
     void createUserTable();
 
@@ -20,13 +13,9 @@ public interface UserDAO<T> {
 
     void cleanUserTable();
 
-//    Optional<T> get(long id);
-//
-//    List<T> getAll();
-//
-//    void save(T t);
-//
-//    void update(T t, String[] params);
-//
-//    void delete(T t);
+    void saveUser(User user);
+
+    void getAllUsers();
+
+    void removeUserById(Long id);
 }
