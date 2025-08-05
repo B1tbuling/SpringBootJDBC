@@ -91,7 +91,7 @@ public class UserDaoJdbcImp implements UserDAO {
 
             System.out.println("Пользователь успено создан");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -116,7 +116,7 @@ public class UserDaoJdbcImp implements UserDAO {
                 System.out.println("Пользователь не был удален");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -127,12 +127,12 @@ public class UserDaoJdbcImp implements UserDAO {
             SELECT * FROM "user";
         """;
 
+        List<User> users = new ArrayList<>();
+
         try (
             Connection connection = JdbcUtil.open();
             PreparedStatement statement = connection.prepareStatement(sql);
         ) {
-            List<User> users = new ArrayList<>();
-
             var result = statement.executeQuery();
 
             while (result.next()) {
@@ -148,7 +148,9 @@ public class UserDaoJdbcImp implements UserDAO {
 
             return users;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+
+        return users;
     }
 }
