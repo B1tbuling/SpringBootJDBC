@@ -3,7 +3,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres-jdbc
+    container_name: postgres-java-learn
     environment:
       POSTGRES_USER: slr
       POSTGRES_PASSWORD: 1234

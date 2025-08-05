@@ -1,5 +1,7 @@
 package com.rest_java_education.course;
 
+import java.util.List;
+
 import com.rest_java_education.course.model.User;
 import com.rest_java_education.course.service.UserService;
 
@@ -21,7 +23,8 @@ public class Main {
         userService.saveUser(user3);
         userService.saveUser(user4);
 
-        userService.getAllUsers();
+        List<User> users = userService.getAllUsers();
+        System.out.println("Все пользователи: " + users);
 
         userService.removeUserById(1L);
 

@@ -1,5 +1,8 @@
 package com.rest_java_education.course.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLException;
@@ -10,83 +13,74 @@ import com.rest_java_education.course.utils.JdbcUtil;
 
 public class UserDaoJdbcImp implements UserDAO {
 
-    String createUserTableSQL = """
-        CREATE TABLE "user" (
-            id INTEGER PRIMARY KEY NOT NULL,
-            name VARCHAR NOT NULL,
-            email VARCHAR NOT NULL,
-            phone_number VARCHAR NOT NULL
-         );
-    """;
-
-    String dropUserTableSQL = """
-        DROP TABLE "user";
-    """;
-
-    String cleanUserTableSQL = """
-        DELETE FROM "user";
-    """;
-
-    String crateUserSQL = """
-        INSERT INTO "user" ( id, name, email, phone_number ) VALUES ( ?, ?, ?, ? );
-    """;
-
-    String getAllUsersSQL = """
-        SELECT * FROM "user";
-    """;
-
-    String deleteUserByIdSQL = """
-        DELETE FROM "user" WHERE id = ?;
-    """;
-
-
     @Override
     public void createUserTable() {
+        String sql = """
+            CREATE TABLE "user" (
+                id INTEGER PRIMARY KEY NOT NULL,
+                name VARCHAR NOT NULL,
+                email VARCHAR NOT NULL,
+                phone_number VARCHAR NOT NULL
+             );
+        """;
+
         try (
-            var connection = JdbcUtil.open();
-            var statement = connection.createStatement();
+            Connection connection = JdbcUtil.open();
+            Statement statement = connection.createStatement();
         ) {
-            statement.execute(createUserTableSQL);
+            statement.execute(sql);
             System.out.println("Таблица user успешно создана");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
 
     @Override
     public void dropUserTable() {
+        String sql = """
+            DROP TABLE "user";
+        """;
+
         try (
-            var connection = JdbcUtil.open();
-            var statement = connection.createStatement();
+            Connection connection = JdbcUtil.open();
+            Statement statement = connection.createStatement();
         ) {
-            statement.execute(dropUserTableSQL);
+            statement.execute(sql);
             System.out.println("Таблица user успешно удалена");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
 
     @Override
     public void cleanUserTable() {
+        String sql = """
+            DELETE FROM "user";
+        """;
+
         try (
-                var connection = JdbcUtil.open();
-                var statement = connection.createStatement();
+            Connection connection = JdbcUtil.open();
+            Statement statement = connection.createStatement();
         ) {
-            statement.execute(cleanUserTableSQL);
+            statement.execute(sql);
             System.out.println("Таблица user успешно очищена от данных");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
 
     @Override
     public void saveUser(User user) {
+        String sql = """
+            INSERT INTO "user" ( id, name, email, phone_number ) VALUES ( ?, ?, ?, ? );
+        """;
+
         try (
-                var connection = JdbcUtil.open();
-                var statement = connection.prepareStatement(crateUserSQL);
+            Connection connection = JdbcUtil.open();
+            PreparedStatement statement = connection.prepareStatement(sql);
         ) {
             statement.setLong(1, user.getId());
             statement.setString(2, user.getName());
@@ -104,9 +98,13 @@ public class UserDaoJdbcImp implements UserDAO {
 
     @Override
     public void removeUserById(Long id) {
+        String sql = """
+            DELETE FROM "user" WHERE id = ?;
+        """;
+
         try (
-            var connection = JdbcUtil.open();
-            var statement = connection.prepareStatement(deleteUserByIdSQL);
+            Connection connection = JdbcUtil.open();
+            PreparedStatement statement = connection.prepareStatement(sql);
         ) {
             statement.setLong(1, id);
 
@@ -124,10 +122,14 @@ public class UserDaoJdbcImp implements UserDAO {
 
 
     @Override
-    public void getAllUsers() {
+    public List<User> getAllUsers() {
+        String sql = """
+            SELECT * FROM "user";
+        """;
+
         try (
-            var connection = JdbcUtil.open();
-            var statement = connection.prepareStatement(getAllUsersSQL);
+            Connection connection = JdbcUtil.open();
+            PreparedStatement statement = connection.prepareStatement(sql);
         ) {
             List<User> users = new ArrayList<>();
 
@@ -144,7 +146,7 @@ public class UserDaoJdbcImp implements UserDAO {
                 );
             }
 
-            System.out.println("Все пользователи: " + users);
+            return users;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

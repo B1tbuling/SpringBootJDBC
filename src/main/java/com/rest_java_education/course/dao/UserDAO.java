@@ -15,7 +15,7 @@ public interface UserDAO {
 
     void saveUser(User user);
 
-    void getAllUsers();
+    List<User> getAllUsers();
 
     void removeUserById(Long id);
 }
