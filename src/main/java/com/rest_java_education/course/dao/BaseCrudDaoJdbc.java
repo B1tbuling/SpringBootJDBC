@@ -48,8 +48,8 @@ public class BaseCrudDaoJdbc implements BaseCrudDAO {
 
     public void removeById(Long id, String tableName) {
         String sql = """
-            DELETE FROM "%s" WHERE id = %s;
-        """.formatted(tableName, id);
+            DELETE FROM "%s" WHERE id = ?;
+        """.formatted(tableName);
 
         try (
             Connection connection = JdbcUtil.open();

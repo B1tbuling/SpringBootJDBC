@@ -36,13 +36,13 @@ public class Main {
         List<User> users = userService.getAllUsers();
         System.out.println("Все пользователи: " + users);
 
-        //baseCrudService.removeById(1L, "user");
-        userService.removeUserById(1L);
+        baseCrudService.removeById(1L, "user");
+        //userService.removeUserById(1L);
 
-        //baseCrudService.cleanTable("user");
-        userService.cleanUserTable();
+        baseCrudService.cleanTable("user");
+        //userService.cleanUserTable();
 
-        //baseCrudService.dropTable("user");
-        userService.dropUserTable();
+        baseCrudService.dropTable("user");
+        //userService.dropUserTable();
     }
 }
