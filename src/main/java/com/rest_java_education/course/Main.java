@@ -3,22 +3,11 @@ package com.rest_java_education.course;
 import java.util.List;
 
 import com.rest_java_education.course.model.User;
-import com.rest_java_education.course.service.BaseCrudService;
 import com.rest_java_education.course.service.UserService;
 
 
 public class Main {
     public static void main(String[] args) {
-//        enum Entity {
-//            USER("user"),
-//            CLIENT("client"),
-//            ADMIN("client"),
-//            MODERATOR("client"),
-//            WORKER("worker"),
-//        }
-
-
-        BaseCrudService baseCrudService = new BaseCrudService();
         UserService userService = new UserService();
 
         userService.createUserTable();
@@ -36,13 +25,10 @@ public class Main {
         List<User> users = userService.getAllUsers();
         System.out.println("Все пользователи: " + users);
 
-        baseCrudService.removeById(1L, "user");
-        //userService.removeUserById(1L);
+        userService.removeUserById(1L);
 
-        baseCrudService.cleanTable("user");
-        //userService.cleanUserTable();
+        userService.cleanUserTable();
 
-        baseCrudService.dropTable("user");
-        //userService.dropUserTable();
+        userService.dropUserTable();
     }
 }

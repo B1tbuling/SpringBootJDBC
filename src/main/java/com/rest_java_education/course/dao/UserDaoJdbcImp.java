@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLException;
 
+import com.rest_java_education.course.model.TableNameEnum;
 import com.rest_java_education.course.model.User;
 import com.rest_java_education.course.utils.JdbcUtil;
+import com.rest_java_education.course.utils.SqlQueryBuilder;
 
 
 public class UserDaoJdbcImp implements UserDAO {
@@ -38,9 +40,8 @@ public class UserDaoJdbcImp implements UserDAO {
 
     @Override
     public void dropUserTable() {
-        String sql = """
-            DROP TABLE "user";
-        """;
+        SqlQueryBuilder sqlQueryBuilder = new SqlQueryBuilder();
+        String sql = sqlQueryBuilder.generateDropTableQuery(TableNameEnum.USER);
 
         try (
             Connection connection = JdbcUtil.open();
@@ -56,9 +57,8 @@ public class UserDaoJdbcImp implements UserDAO {
 
     @Override
     public void cleanUserTable() {
-        String sql = """
-            DELETE FROM "user";
-        """;
+        SqlQueryBuilder sqlQueryBuilder = new SqlQueryBuilder();
+        String sql = sqlQueryBuilder.generateCleanTableQuery(TableNameEnum.USER);
 
         try (
             Connection connection = JdbcUtil.open();
@@ -98,16 +98,13 @@ public class UserDaoJdbcImp implements UserDAO {
 
     @Override
     public void removeUserById(Long id) {
-        String sql = """
-            DELETE FROM "user" WHERE id = ?;
-        """;
+        SqlQueryBuilder sqlQueryBuilder = new SqlQueryBuilder();
+        String sql = sqlQueryBuilder.generateRemoveByIdQuery(id, TableNameEnum.USER);
 
         try (
             Connection connection = JdbcUtil.open();
             PreparedStatement statement = connection.prepareStatement(sql);
         ) {
-            statement.setLong(1, id);
-
             var statementDeleteUser = statement.executeUpdate();
 
             if (statementDeleteUser > 0) {
@@ -123,9 +120,8 @@ public class UserDaoJdbcImp implements UserDAO {
 
     @Override
     public List<User> getAllUsers() {
-        String sql = """
-            SELECT * FROM "user";
-        """;
+        SqlQueryBuilder sqlQueryBuilder = new SqlQueryBuilder();
+        String sql = sqlQueryBuilder.generateFindAllQuery(TableNameEnum.USER);
 
         List<User> users = new ArrayList<>();
 
