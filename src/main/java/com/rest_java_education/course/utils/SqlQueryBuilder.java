@@ -3,29 +3,28 @@ package com.rest_java_education.course.utils;
 import com.rest_java_education.course.model.TableNameEnum;
 
 
-
 public class SqlQueryBuilder {
-    public String generateDropTableQuery(TableNameEnum tableName) {
+    public String generateDropTableQuery(String tableName) {
         return """
            DROP TABLE "%s";
-        """.formatted(tableName.getTableName());
+        """.formatted(tableName);
     }
 
-    public String generateCleanTableQuery(TableNameEnum tableName) {
+    public String generateCleanTableQuery(String tableName) {
         return """
             DELETE FROM "%s";
-        """.formatted(tableName.getTableName());
+        """.formatted(tableName);
     }
 
-    public String generateRemoveByIdQuery(Long id, TableNameEnum tableName) {
+    public String generateRemoveByIdQuery(Long id, String tableName) {
         return """
             DELETE FROM "%s" WHERE id = %d;
-        """.formatted(tableName.getTableName(), id);
+        """.formatted(tableName, id);
     }
 
-    public String generateFindAllQuery(TableNameEnum tableName) {
+    public String generateFindAllQuery(String tableName) {
         return """
             SELECT * FROM "%s";
-        """.formatted(tableName.getTableName());
+        """.formatted(tableName);
     }
 }
