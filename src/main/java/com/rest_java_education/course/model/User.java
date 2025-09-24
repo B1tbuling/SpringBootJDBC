@@ -1,10 +1,21 @@
 package com.rest_java_education.course.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
 
+
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "email")
     private String email;
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     public User(Long id, String name, String email, String phoneNumber) {
@@ -13,6 +24,8 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
+
+    public User() {}
 
     public Long getId() {
         return id;

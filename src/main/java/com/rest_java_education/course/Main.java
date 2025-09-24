@@ -25,7 +25,7 @@ public class Main {
         List<User> users = userService.getAllUsers();
         System.out.println("Все пользователи: " + users);
 
-        userService.removeUserById(1L);
+        userService.removeUser(user1);
 
         userService.cleanUserTable();
 

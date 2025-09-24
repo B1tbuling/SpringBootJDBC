@@ -15,7 +15,6 @@ import com.rest_java_education.course.utils.SqlQueryBuilder;
 
 public class UserDaoJdbcImp implements UserDAO {
 
-    @Override
     public void createUserTable() {
         String sql = """
             CREATE TABLE "user" (
@@ -38,10 +37,9 @@ public class UserDaoJdbcImp implements UserDAO {
     }
 
 
-    @Override
     public void dropUserTable() {
         SqlQueryBuilder sqlQueryBuilder = new SqlQueryBuilder();
-        String sql = sqlQueryBuilder.generateDropTableQuery(TableNameEnum.USER);
+        String sql = sqlQueryBuilder.generateDropTableQuery("users");
 
         try (
             Connection connection = JdbcUtil.open();
@@ -55,10 +53,9 @@ public class UserDaoJdbcImp implements UserDAO {
     }
 
 
-    @Override
     public void cleanUserTable() {
         SqlQueryBuilder sqlQueryBuilder = new SqlQueryBuilder();
-        String sql = sqlQueryBuilder.generateCleanTableQuery(TableNameEnum.USER);
+        String sql = sqlQueryBuilder.generateCleanTableQuery("users");
 
         try (
             Connection connection = JdbcUtil.open();
@@ -99,7 +96,7 @@ public class UserDaoJdbcImp implements UserDAO {
     @Override
     public void removeUserById(Long id) {
         SqlQueryBuilder sqlQueryBuilder = new SqlQueryBuilder();
-        String sql = sqlQueryBuilder.generateRemoveByIdQuery(id, TableNameEnum.USER);
+        String sql = sqlQueryBuilder.generateRemoveByIdQuery(id, "users");
 
         try (
             Connection connection = JdbcUtil.open();
@@ -119,9 +116,13 @@ public class UserDaoJdbcImp implements UserDAO {
 
 
     @Override
+    public void removeUser(User user) {}
+
+
+    @Override
     public List<User> getAllUsers() {
         SqlQueryBuilder sqlQueryBuilder = new SqlQueryBuilder();
-        String sql = sqlQueryBuilder.generateFindAllQuery(TableNameEnum.USER);
+        String sql = sqlQueryBuilder.generateFindAllQuery("users");
 
         List<User> users = new ArrayList<>();
 
